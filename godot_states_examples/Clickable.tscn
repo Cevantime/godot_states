@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvp752y207owj"]
+
+[ext_resource type="Script" path="res://godot_states_examples/Clickable.gd" id="1_bwcie"]
+
+[node name="Clickable" type="Node"]
+script = ExtResource("1_bwcie")

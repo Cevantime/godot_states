@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0kptn3rybo27"]
+
+[ext_resource type="Script" path="res://godot_states_examples/state_machine/ChangeState.gd" id="1_kq1vf"]
+
+[node name="ChangeState" type="Node"]
+script = ExtResource("1_kq1vf")

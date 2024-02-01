@@ -1,0 +1,110 @@
+[gd_scene load_steps=13 format=3 uid="uid://dnbnxhkn4poqx"]
+
+[ext_resource type="Texture2D" uid="uid://psj84fy304re" path="res://godot_states_examples/behavior/wood.png" id="1_ugcs5"]
+[ext_resource type="Texture2D" uid="uid://ddst6hjgts34y" path="res://godot_states_examples/behavior/barel.png" id="2_bbc8c"]
+[ext_resource type="Texture2D" uid="uid://ci0nv66nndxj1" path="res://godot_states_examples/behavior/hero.png" id="3_54381"]
+[ext_resource type="Script" path="res://addons/godot_states/SwitchableState.gd" id="4_56o08"]
+[ext_resource type="Script" path="res://addons/godot_states/StackedState.gd" id="5_uetml"]
+[ext_resource type="PackedScene" uid="uid://dvp752y207owj" path="res://godot_states_examples/Clickable.tscn" id="6_atkn5"]
+[ext_resource type="PackedScene" uid="uid://box1ehocifxa3" path="res://godot_states_examples/Move.tscn" id="7_1im55"]
+[ext_resource type="PackedScene" uid="uid://d0kptn3rybo27" path="res://godot_states_examples/state_machine/ChangeState.tscn" id="7_dl3qj"]
+[ext_resource type="Script" path="res://godot_states_examples/state_machine/FollowMouse.gd" id="8_m2gxe"]
+[ext_resource type="Script" path="res://godot_states_examples/state_machine/ChangeOpacity.gd" id="9_bbsam"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1p814"]
+diffuse_texture = ExtResource("1_ugcs5")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wqq76"]
+diffuse_texture = ExtResource("3_54381")
+texture_filter = 1
+
+[node name="StateMachineExample" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(0.523594, 0.000578532, 0.607909, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_1p814")
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -394.0
+offset_bottom = 75.0
+grow_horizontal = 0
+text = "This example uses a switchable state to make the character draggable with the mouse. When the character is dragged, it can't move using arrow keys."
+autowrap_mode = 2
+
+[node name="Barel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(263, 182)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel2" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(405, 281)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel3" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(334, 85)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel4" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(526, 364)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel5" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(789, 546)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel6" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(748, 227)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel7" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1011, 409)
+texture = ExtResource("2_bbc8c")
+
+[node name="Barel8" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(249, 515)
+texture = ExtResource("2_bbc8c")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Hero" type="Sprite2D" parent="CanvasLayer2"]
+position = Vector2(102, 107)
+texture = SubResource("CanvasTexture_wqq76")
+
+[node name="States" type="Node" parent="CanvasLayer2/Hero"]
+script = ExtResource("4_56o08")
+
+[node name="Default" type="Node" parent="CanvasLayer2/Hero/States"]
+script = ExtResource("5_uetml")
+
+[node name="Move" parent="CanvasLayer2/Hero/States/Default" instance=ExtResource("7_1im55")]
+
+[node name="ChangeToDragged" parent="CanvasLayer2/Hero/States/Default" instance=ExtResource("7_dl3qj")]
+target_state = "Dragged"
+
+[node name="Dragged" type="Node" parent="CanvasLayer2/Hero/States"]
+script = ExtResource("5_uetml")
+
+[node name="FollowMouse" type="Node" parent="CanvasLayer2/Hero/States/Dragged"]
+script = ExtResource("8_m2gxe")
+
+[node name="ChangeOpacity" type="Node" parent="CanvasLayer2/Hero/States/Dragged"]
+script = ExtResource("9_bbsam")
+opacity = 0.7
+
+[node name="ChangeToDefault" parent="CanvasLayer2/Hero/States/Dragged" instance=ExtResource("7_dl3qj")]
+target_state = "Default"
+
+[node name="Clickable" parent="CanvasLayer2/Hero" instance=ExtResource("6_atkn5")]
+
+[connection signal="pressed" from="CanvasLayer2/Hero/Clickable" to="CanvasLayer2/Hero/States/Default/ChangeToDragged" method="change_the_state"]
+[connection signal="released" from="CanvasLayer2/Hero/Clickable" to="CanvasLayer2/Hero/States/Dragged/ChangeToDefault" method="change_the_state"]

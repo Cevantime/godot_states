@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvh1mv7yu0rob"]
+
+[ext_resource type="Script" path="res://addons/godot_states/StateRigidBody2D.gd" id="1_dv0d7"]
+
+[node name="StateRigidBody" type="RigidBody2D"]
+script = ExtResource("1_dv0d7")

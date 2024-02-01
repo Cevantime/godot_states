@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnhvnq5xn5xt7"]
+
+[ext_resource type="Script" path="res://addons/godot_states/StateRigidBody3D.gd" id="1_fwbws"]
+
+[node name="StateRigidBody3d" type="RigidBody3D"]
+script = ExtResource("1_fwbws")

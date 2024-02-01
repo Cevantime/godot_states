@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1uv3komqh6e3"]
+
+[ext_resource type="Script" path="res://addons/godot_states/StackedState.gd" id="1"]
+[ext_resource type="PackedScene" path="res://addons/godot_states/State.tscn" id="2"]
+
+[node name="MultipleStateMachine" instance=ExtResource("2")]
+script = ExtResource("1")
+disabled = null

@@ -1,0 +1,99 @@
+[gd_scene load_steps=9 format=3 uid="uid://47c06piyibto"]
+
+[ext_resource type="Texture2D" uid="uid://ci0nv66nndxj1" path="res://godot_states_examples/behavior/hero.png" id="1_owcs1"]
+[ext_resource type="Texture2D" uid="uid://ddst6hjgts34y" path="res://godot_states_examples/behavior/barel.png" id="2_thq1n"]
+[ext_resource type="Texture2D" uid="uid://psj84fy304re" path="res://godot_states_examples/behavior/wood.png" id="3_ckvws"]
+[ext_resource type="PackedScene" uid="uid://box1ehocifxa3" path="res://godot_states_examples/Move.tscn" id="4_os67y"]
+[ext_resource type="PackedScene" uid="uid://dvp752y207owj" path="res://godot_states_examples/Clickable.tscn" id="5_ggaek"]
+[ext_resource type="Script" path="res://godot_states_examples/behavior/ToggleVisibilityStateMachine.gd" id="6_18v5q"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_1p814"]
+diffuse_texture = ExtResource("3_ckvws")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wqq76"]
+diffuse_texture = ExtResource("1_owcs1")
+texture_filter = 1
+
+[node name="BehaviorExample" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(0.523594, 0.000578532, 0.607909, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_1p814")
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -394.0
+offset_bottom = 75.0
+grow_horizontal = 0
+text = "This example is purely behavioral. Character moves (with arrow keys) using Move State and is  made clickable by the Clickable State.
+The states has been designed with some flexibility in mind and can be used in various contexts"
+autowrap_mode = 2
+
+[node name="Barel" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(263, 182)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel2" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(405, 281)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel3" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(334, 85)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel4" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(526, 364)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel5" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(789, 546)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel6" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(748, 227)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel7" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1011, 409)
+texture = ExtResource("2_thq1n")
+
+[node name="Barel8" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(249, 515)
+texture = ExtResource("2_thq1n")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Hero" type="Sprite2D" parent="CanvasLayer2"]
+position = Vector2(102, 107)
+texture = SubResource("CanvasTexture_wqq76")
+
+[node name="Move" parent="CanvasLayer2/Hero" instance=ExtResource("4_os67y")]
+
+[node name="Clickable" parent="CanvasLayer2/Hero" instance=ExtResource("5_ggaek")]
+
+[node name="ToggleVisibility" type="Node" parent="CanvasLayer2/Hero"]
+script = ExtResource("6_18v5q")
+node_to_toggle = NodePath("../Label")
+
+[node name="Label" type="Label" parent="CanvasLayer2/Hero"]
+visible = false
+offset_left = -65.0
+offset_top = 37.0
+offset_right = 64.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 11
+text = "You clicked me !!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="clicked" from="CanvasLayer2/Hero/Clickable" to="CanvasLayer2/Hero/ToggleVisibility" method="toggle_node"]
